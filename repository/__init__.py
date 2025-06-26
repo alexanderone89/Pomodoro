@@ -4,4 +4,3 @@ from repository.user import UserRepository
 
 
 __all__ = ['TaskRepository', 'TaskCache', 'UserRepository']
-

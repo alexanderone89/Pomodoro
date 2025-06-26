@@ -21,3 +21,4 @@ class AuthService:
             raise UserNotFoundException
         if user.password != password:
             raise UserNotCorrectPasswordException
+
