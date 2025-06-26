@@ -5,7 +5,7 @@ class Settings(BaseSettings):
     GOOGLE_TOKEN_ID: str = "<DEFAULT_TOKEN_ID>"
     # sqlite_db_name: str = "pomodoro.sqlite"
     DB_HOST: str = "localhost"
-    DB_PORT: int = "5432"
+    DB_PORT: int = "5433"
     DB_USER: str = "postgres"
     DB_PASSWORD: str = "password"
     DB_DRIVER: str = "postgresql+psycopg2"
@@ -16,4 +16,5 @@ class Settings(BaseSettings):
 
     @property
     def db_url(self):
+        # print(f'{self.DB_DRIVER}://{self.DB_USER}:{self.DB_PASSWORD}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}')
         return f'{self.DB_DRIVER}://{self.DB_USER}:{self.DB_PASSWORD}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}'

@@ -17,7 +17,7 @@ class TaskService:
     task_cache: TaskCache
 
 
-    def get_tasks(self):
+    def get_tasks(self)-> list[TaskSchema]:
         # тонарный оператор :=
         if tasks := self.task_cache.get_tasks():
             return tasks

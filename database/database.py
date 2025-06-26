@@ -1,15 +1,13 @@
-from requests import Session
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from typing import Any
 
-from settings import Settings
+from sqlalchemy.orm import DeclarativeBase, declared_attr
 
-# engine = create_engine("sqlite:///pomodoro.sqlite")
-# engine = create_engine("postgresql+psycopg2://postgres:password@localhost:5433/pomodoro")
-settings = Settings()
-engine = create_engine(settings.db_url)
 
-Session = sessionmaker(engine)
+class Base(DeclarativeBase):
+    id: Any
+    __name__: str
+    __allow_unmapped = True
 
-def get_db_session()->Session:
-    return Session
+    @declared_attr
+    def __tablename__(self)->str:
+        return self.__name__.lower()
