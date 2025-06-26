@@ -11,14 +11,6 @@ from service.task import TaskService
 router = APIRouter(prefix="/tasks", tags=["tasks"])
 
 
-async def common_parameters(q: str | None = None, skip: int = 0, limit: int = 100):
-    return {"q": q, "skip": skip, "limit": limit}
-
-@router.get("/")
-async def read_items(commons: Annotated[dict, Depends(common_parameters)]):
-    print(commons)
-    return commons
-
 @router.get("/all",response_model=list[TaskSchema] | None)
 async def get_tasks(
         task_service: Annotated[TaskService, Depends(get_task_service)],
