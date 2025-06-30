@@ -1,8 +1,7 @@
 from typing import Annotated
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, status
 from fastapi.params import Depends
-from starlette import status
 
 from dependecy import get_auth_service
 from exception import UserNotFoundException, UserNotCorrectPasswordException
