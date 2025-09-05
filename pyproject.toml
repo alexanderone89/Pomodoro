@@ -18,6 +18,11 @@ redis = "^6.2.0"
 python-jose = "^3.5.0"
 alembic = "^1.16.4"
 gunicorn = "^23.0.0"
+pytest = {extras = ["async"], version = "^8.4.1"}
+pytest-twisted = "^1.14.3"
+twisted = "^25.5.0"
+factory-boy = "^3.3.3"
+pytest-factoryboy = "^2.8.1"
 
 
 [build-system]
