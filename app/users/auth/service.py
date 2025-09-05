@@ -11,6 +11,7 @@ from app.users.user_profile.repository import UserRepository
 from app.users.auth.schema import UserLoginSchema
 from app.users.user_profile.schema import  UserCreateSchema
 from app.settings import Settings
+from tests.fixtures.settings import settings
 
 
 @dataclass
@@ -76,7 +77,7 @@ class AuthService:
 
     def generate_access_token(self, user_id: int)->str:
         # токен на неделю
-        expire_date_unix = (dt.datetime.utcnow() + timedelta(days=7)).timestamp()
+        expire_date_unix = (dt.datetime.utcnow() + timedelta(days=self.settings.ACCESS_TOKEN_EXPIRE_DAY)).timestamp()
         token = jwt.encode({'user_id': user_id,
                             'exp': expire_date_unix,},
             self.settings.JWT_SECRET_KEY,

@@ -18,6 +18,8 @@ class Settings(BaseSettings):
 
     JWT_SECRET_KEY: str = "secret_key"
     JWT_ENCODE_ALGORITHM: str = "HS256"
+    ACCESS_TOKEN_EXPIRE_DAY: int = 7
+
 
     GOOGLE_CLIENT_ID: str = ""
     GOOGLE_SECRET_KEY: str = ""
