@@ -3,7 +3,7 @@ from typing import Optional
 from sqlalchemy.orm import Mapped
 from sqlalchemy.testing.schema import mapped_column
 
-from app.infrastructure.database import Base
+from app.infrastructure.database.database import Base
 
 
 class UserProfile(Base):

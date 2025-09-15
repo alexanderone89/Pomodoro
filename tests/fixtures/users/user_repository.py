@@ -16,5 +16,5 @@ class FakeUserRepository:
         return None
 
 @pytest.fixture
-def user_repository():
+def fake_user_repository():
     return FakeUserRepository()

@@ -23,6 +23,9 @@ pytest-twisted = "^1.14.3"
 twisted = "^25.5.0"
 factory-boy = "^3.3.3"
 pytest-factoryboy = "^2.8.1"
+pytest-asyncio = "^1.1.0"
+pytest-async = "^0.1.1"
+pytest-trio = "^0.8.0"
 
 
 [build-system]
