@@ -4,11 +4,9 @@ from httpx import AsyncClient
 
 from app.settings import Settings
 from app.users.auth.schema import GoogleUserData, YandexUserData
-
-import factory.fuzzy
-from pytest_factoryboy import register
 from faker import Factory as FakerFactory
 
+from tests.fixtures.users.user_model import EXISTS_GOOGLE_USER_EMAIL, EXISTS_GOOGLE_USER_ID
 
 faker = FakerFactory.create()
 
@@ -48,8 +46,8 @@ def yandex_client():
 
 def google_user_info_date()->GoogleUserData:
     return GoogleUserData(
-        id=faker.random_int(),
-        email=faker.email(),
+        id=EXISTS_GOOGLE_USER_ID,#faker.random_int(),
+        email=EXISTS_GOOGLE_USER_EMAIL, #faker.email(),
         name=faker.name(),
         verified_email=True,
         access_token=faker.sha256(),

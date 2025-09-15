@@ -11,7 +11,7 @@ from app.users.user_profile.repository import UserRepository
 from app.users.auth.schema import UserLoginSchema
 from app.users.user_profile.schema import  UserCreateSchema
 from app.settings import Settings
-from tests.fixtures.settings import settings
+from tests.fixtures.infrastructure import settings
 
 
 @dataclass
@@ -26,7 +26,7 @@ class AuthService:
 
         if user := await self.user_repository.get_user_by_email(email=user_data.email):
             access_token = self.generate_access_token(user_id=user.id)
-            print(user)
+            # print(user)
             return UserLoginSchema(user_id=user.id, access_token=access_token)
 
         create_user_data = UserCreateSchema(
