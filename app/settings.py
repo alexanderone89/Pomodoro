@@ -31,7 +31,8 @@ class Settings(BaseSettings):
     YANDEX_REDIRECT_URI: str = ""
     YANDEX_TOKEN_URL: str = "https://oauth.yandex.ru/token"
 
-    CELERY_REDIS_URL: str = "redis://localhost:6379"
+    # CELERY_REDIS_URL: str = "redis://localhost:6379"
+    CELERY_BROKER_URL: str = "amqp://guest:guest@localhost:5672//"
     from_email: str="alexanderone89@mail.ru"
     SMTP_HOST: str = "smtp.mail.ru"
     SMTP_PORT: int = 465
