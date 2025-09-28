@@ -1,6 +1,7 @@
 import pytest_asyncio
 
 from app.settings import Settings
+from app.users.auth.client import MailClient
 from app.users.auth.service import AuthService
 from app.users.user_profile.repository import UserRepository
 from tests.fixtures.auth.clients import google_client, yandex_client
@@ -20,7 +21,8 @@ def mock_auth_service(
         user_repository=fake_user_repository,
         settings=Settings(),
         google_client=google_client,
-        yandex_client=yandex_client
+        yandex_client=yandex_client,
+        mail_client=MailClient(),
     )
 
 
@@ -37,4 +39,5 @@ def auth_service(
         settings=Settings(),
         google_client=google_client,
         yandex_client=yandex_client,
+        mail_client=MailClient(),
 )
