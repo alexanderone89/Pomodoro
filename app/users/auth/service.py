@@ -6,6 +6,7 @@ from jose import jwt, JWTError
 from app.users.auth.client import GoogleClient
 from app.users.auth.client import YandexClient
 from app.exception import UserNotFoundException, UserNotCorrectPasswordException, TokenExpired, TokenNotCorrect
+from app.users.auth.client.mail import MailClient
 from app.users.user_profile.models import UserProfile
 from app.users.user_profile.repository import UserRepository
 from app.users.auth.schema import UserLoginSchema
@@ -20,13 +21,13 @@ class AuthService:
     settings: Settings
     google_client: GoogleClient
     yandex_client: YandexClient
+    mail_client: MailClient
 
     async def google_auth(self, code: str):
         user_data = await self.google_client.get_user_info(code=code)
 
         if user := await self.user_repository.get_user_by_email(email=user_data.email):
             access_token = self.generate_access_token(user_id=user.id)
-            # print(user)
             return UserLoginSchema(user_id=user.id, access_token=access_token)
 
         create_user_data = UserCreateSchema(
@@ -36,6 +37,7 @@ class AuthService:
         )
         created_user = await self.user_repository.create_user(create_user_data)
         access_token = self.generate_access_token(user_id=created_user.id)
+        self.mail_client.send_welcome_mail(user_data.email)
         return UserLoginSchema(user_id=created_user.id, access_token=access_token)
 
     async def yandex_auth(self, code: str):
@@ -52,6 +54,7 @@ class AuthService:
         )
         created_user = await self.user_repository.create_user(create_user_data)
         access_token = self.generate_access_token(user_id=created_user.id)
+        self.mail_client.send_welcome_mail(user_data.default_email)
         return UserLoginSchema(user_id=created_user.id, access_token=access_token)
 
 
