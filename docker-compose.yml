@@ -48,7 +48,60 @@ services:
       - "5672:5672"
       - "15672:15672"
 
+  zookeeper:
+    platform: linux/x86_64
+    image: confluentinc/cp-zookeeper:7.3.2
+    hostname: zoo1
+    container_name: zoo1
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_SERVER_ID: 1
+      ZOOKEEPER_SERVERS: zoo1:2888:3888
+
+
+  kafka:
+    image: confluentinc/cp-kafka:7.3.2
+    ports:
+      - "9892:9892"
+    volumes:
+      - "kafka_data:/bitnami"
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
+      KAFKA_BROKER_ID: 1
+      KAFKA_DELETE_TOPIC_ENABLE: "true"
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      KAFKA_SCHEMA_REGISTRY_URL: "schemaregistry:8085"
+      KAFKA_LOG4J_ROOT_LOGLEVEL: INFO
+      KAFKA_JMX_PORT: 9991
+    depends_on:
+      - zookeeper
+
+  schemaregistry:
+    image: pravega/schemaregistry
+    restart: always
+    depends_on:
+      - zookeeper
+
+  kafdrop:
+    platform: linux/x86_64
+    image: obsidiandynamics/kafdrop:3.31.0-SNAPSHOT
+    depends_on:
+      - kafka
+      - schemaregistry
+    ports:
+      - 19000:9000
+    environment:
+      KAFKA_BROKERCONNECT: kafka:9092
+      CMD_ARGS: "--message.format=AVRO --message.keyFormat=DEFAULT --schemaregistry.connect=http://schemaregistry:8085"
+
+
 volumes:
   pgdata:
+    driver: local
+  zookeeper_data:
+    driver: local
+  kafka_data:
     driver: local
 

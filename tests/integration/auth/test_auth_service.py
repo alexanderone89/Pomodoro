@@ -30,7 +30,7 @@ async def test_google_auth__login_not_exist_user(auth_service, get_db_session):
 
     user = await auth_service.google_auth(code)
 
-    assert len(users) == 1
+    assert len(users) == 0
     assert user is not None
     async with get_db_session as session:
         login_user = (await session.execute(select(UserProfile).where(UserProfile.id == user.user_id))).scalars().first()

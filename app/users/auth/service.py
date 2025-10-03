@@ -37,7 +37,7 @@ class AuthService:
         )
         created_user = await self.user_repository.create_user(create_user_data)
         access_token = self.generate_access_token(user_id=created_user.id)
-        self.mail_client.send_welcome_mail(user_data.email)
+        await self.mail_client.send_welcome_email(user_data.email)
         return UserLoginSchema(user_id=created_user.id, access_token=access_token)
 
     async def yandex_auth(self, code: str):
